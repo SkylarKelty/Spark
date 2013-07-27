@@ -1,0 +1,27 @@
+{
+   "name": "Spark/Spark",
+   "description": "High-performance Templating Engine designed to work with common WYSIWYG HTML editors.",
+   "type": "library",
+   "keywords": [
+      "template",
+      "templating",
+   ],
+   "homepage": "https://github.com/SkylarKelty/Spark",
+   "license": "Commercial",
+   "authors": [{
+      "name": "Skylar Tristan Kelty",
+      "email": "skylarkelty@gmail.com",
+      "role": "lead"
+   }],
+   "require": {
+      "php": ">=5.3.*"
+   },
+   "require-dev": {
+      "phpunit/phpunit": "3.7.*"
+   },
+   "autoload": {
+      "psr-0": {
+         "Spark": ["src/"]
+      }
+   }
+}
