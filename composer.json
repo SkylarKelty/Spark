@@ -4,7 +4,7 @@
    "type": "library",
    "keywords": [
       "template",
-      "templating",
+      "templating"
    ],
    "homepage": "https://github.com/SkylarKelty/Spark",
    "license": "Commercial",
@@ -14,7 +14,7 @@
       "role": "lead"
    }],
    "require": {
-      "php": ">=5.3.*"
+      "php": ">=5.3"
    },
    "require-dev": {
       "phpunit/phpunit": "3.7.*"
