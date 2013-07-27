@@ -55,6 +55,7 @@ class Spark
 
 		$lines = $this->breakup($html);
 		$html = $this->tokenise($lines);
+		$html = $this->replace($html);
 		print ($html);
 	}
 
@@ -84,7 +85,7 @@ class Spark
 			// Do we have a valid tag?
 			if (stripos($line, "<" . $this->_namespace) !== false) {
 				// Tokenise it
-				$html .= "<SPARKTOKEN".$token.">\n";
+				$html .= "<SPARKTOKEN" . $token . ">\n";
 				$this->_tokens[$token] = array($line);
 
 				// Add it to the stack
@@ -94,6 +95,7 @@ class Spark
 			} elseif (stripos($line, "</" . $this->_namespace) !== false) {
 				// Pop off the stack
 				$t = array_pop($stack);
+				$this->_tokens[$t][] =  $line;
 			} elseif(!empty($stack)) {
 				// Add the line to the stack
 				$t = array_pop($stack);
@@ -101,6 +103,29 @@ class Spark
 				$stack[] = $t;
 			} else {
 				$html .= $line . "\n";
+			}
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Replace all tokens with real data
+	 * 
+	 * @param string $html The HTML to parse
+	 */
+	private function replace($html) {
+		$tlen = strlen("<" . $this->_namespace);
+
+		foreach ($this->_tokens as $token => $data) {
+			$tag = $data[0];
+			$tag = substr($tag, $tlen);
+			$tag = substr($tag, 0, -1);
+
+			if (isset($this->_registered_elements[$tag])) {
+				$func = $this->_registered_elements[$tag];
+				$markup = $func(implode("\n", $data));
+				$html = str_replace("<SPARKTOKEN" . $token . ">", $markup, $html);
 			}
 		}
 
