@@ -96,7 +96,7 @@ class Spark
 				// Pop off the stack
 				$t = array_pop($stack);
 				$this->_tokens[$t][] =  $line;
-			} elseif(!empty($stack)) {
+			} elseif (!empty($stack)) {
 				// Add the line to the stack
 				$t = array_pop($stack);
 				$this->_tokens[$t][] =  $line;
