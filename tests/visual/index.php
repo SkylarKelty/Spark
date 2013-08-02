@@ -31,9 +31,9 @@ require_once("../../vendor/autoload.php");
 $spark = new Spark\Core\Spark();
 
 // This is a Boolean switch
-$spark->addTag("Test", function($html) {
-    if ($html == "True") return "False";
-    if ($html == "False") return "True";
+$spark->addTag("Test", function($html, $inner) {
+    if ($inner == "True") return "False";
+    if ($inner == "False") return "True";
     return "Error: " . htmlentities($html);
 });
 

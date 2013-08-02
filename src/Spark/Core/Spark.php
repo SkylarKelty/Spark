@@ -28,7 +28,7 @@ class Spark
 	public function __construct($namespace = "Spark") {
 		$this->_namespace = $namespace;
 
-		$this->addTag("Version", function($html) {
+		$this->addTag("Version", function($html, $inner) {
 			return "<p>Spark Version 0.1_dev</p>";
 		});
 	}
@@ -124,7 +124,12 @@ class Spark
 
 			if (isset($this->_registered_elements[$tag])) {
 				$func = $this->_registered_elements[$tag];
-				$markup = $func(implode("\n", $data));
+
+				// Grab markups
+				$snippet_markup = trim(implode("\n", $data));
+				$inner_markup   = trim(implode("\n", array_slice($data, 1, -1)));
+
+				$markup = $func($snippet_markup, $inner_markup);
 				$html = str_replace("<SPARKTOKEN" . $token . ">", $markup, $html);
 			}
 		}
