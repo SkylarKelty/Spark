@@ -19,6 +19,8 @@ class Spark
 	private $_registered_elements = array();
 	/** A list of all current tokens */
 	private $_tokens = array();
+	/** A list of all linked tokens (e.g. embedded snippets) */
+	private $_embedded_tokens = array();
 
 	/**
 	 * Initialise Spark
@@ -84,6 +86,13 @@ class Spark
 		foreach ($lines as $line) {
 			// Do we have a valid tag?
 			if (stripos($line, "<" . $this->_namespace) !== false) {
+				// Link the token to the previous item on the stack
+				if (count($stack) > 0) {
+					$ptr = end($stack);
+					$this->_tokens[$ptr][] = "[[SRM]]";
+					$this->_embedded_tokens[$token] = array($ptr, count($this->_tokens[$ptr]) - 1);
+				}
+
 				// Tokenise it
 				$html .= "<SPARKTOKEN" . $token . ">\n";
 				$this->_tokens[$token] = array($line);
@@ -117,7 +126,9 @@ class Spark
 	private function replace($html) {
 		$tlen = strlen("<" . $this->_namespace);
 
-		foreach ($this->_tokens as $token => $data) {
+		for ($token = count($this->_tokens) - 1; $token >= 0; $token--) {
+			$data = $this->_tokens[$token];
+			
 			$tag = $data[0];
 			$tag = substr($tag, $tlen);
 			$tag = substr($tag, 0, -1);
@@ -131,6 +142,12 @@ class Spark
 
 				$markup = $func($snippet_markup, $inner_markup);
 				$html = str_replace("<SPARKTOKEN" . $token . ">", $markup, $html);
+
+				// Also handle links
+				if (isset($this->_embedded_tokens[$token])) {
+					$ptrs = $this->_embedded_tokens[$token];
+					$this->_tokens[$ptrs[0]][$ptrs[1]] = $markup;
+				}
 			}
 		}
 
