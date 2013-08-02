@@ -14,6 +14,13 @@ ob_start();
     <body>
         <p>Hello world!</p>
         <SparkVersion></SparkVersion>
+        <p>Nested boolean test result:
+            <SparkTest>
+                <SparkTest>
+                    True
+                </SparkTest>
+            </SparkTest>
+        </p>
     </body>
 </html>
 
@@ -22,5 +29,14 @@ $ob = ob_get_clean();
 
 require_once("../../vendor/autoload.php");
 $spark = new Spark\Core\Spark();
+
+// This is a Boolean switch
+$spark->addTag("Test", function($html) {
+    if ($html == "True") return "False";
+    if ($html == "False") return "True";
+    return "Error: " . htmlentities($html);
+});
+
+// Render out
 $spark->render($ob);
 ?>
