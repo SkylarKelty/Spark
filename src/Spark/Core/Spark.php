@@ -86,16 +86,19 @@ class Spark
 		foreach ($lines as $line) {
 			// Do we have a valid tag?
 			if (stripos($line, "<" . $this->_namespace) !== false) {
+				// Register the token
+				$this->_tokens[$token] = array($line);
+
 				// Link the token to the previous item on the stack
 				if (count($stack) > 0) {
+					// List it as embedded, the parent is responsible for the output
 					$ptr = end($stack);
 					$this->_tokens[$ptr][] = "[[SRM]]";
 					$this->_embedded_tokens[$token] = array($ptr, count($this->_tokens[$ptr]) - 1);
+				} else {
+					// Tokenise it
+					$html .= "<SPARKTOKEN" . $token . ">\n";
 				}
-
-				// Tokenise it
-				$html .= "<SPARKTOKEN" . $token . ">\n";
-				$this->_tokens[$token] = array($line);
 
 				// Add it to the stack
 				$stack[] = $token;
@@ -128,7 +131,7 @@ class Spark
 
 		for ($token = count($this->_tokens) - 1; $token >= 0; $token--) {
 			$data = $this->_tokens[$token];
-			
+
 			$tag = $data[0];
 			$tag = substr($tag, $tlen);
 			$tag = substr($tag, 0, -1);

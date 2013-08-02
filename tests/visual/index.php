@@ -14,12 +14,36 @@ ob_start();
     <body>
         <p>Hello world!</p>
         <SparkVersion></SparkVersion>
-        <p>Nested boolean test result:
-            <SparkTest>
-                <SparkTest>
+        <p>Non-Nested boolean switch result:
+            <SparkSwitch>
+                False
+            </SparkSwitch>
+        </p>
+        <p>Nested boolean switch result:
+            <SparkSwitch>
+                <SparkSwitch>
                     True
-                </SparkTest>
-            </SparkTest>
+                </SparkSwitch>
+            </SparkSwitch>
+        </p>
+        <p>Multi-Nested boolean switch result:
+            <SparkSwitch>
+                <SparkSwitch>
+                    <SparkSwitch>
+                        False
+                    </SparkSwitch>
+                </SparkSwitch>
+            </SparkSwitch>
+        </p>
+        <p>Nested boolean logic result:
+            <SparkLogic>
+                <SparkPass>
+                    True
+                </SparkPass>
+                <SparkPass>
+                    False
+                </SparkPass>
+            </SparkLogic>
         </p>
     </body>
 </html>
@@ -31,10 +55,24 @@ require_once("../../vendor/autoload.php");
 $spark = new Spark\Core\Spark();
 
 // This is a Boolean switch
-$spark->addTag("Test", function($html, $inner) {
+$spark->addTag("Switch", function($html, $inner) {
     if ($inner == "True") return "False";
     if ($inner == "False") return "True";
     return "Error: " . htmlentities($html);
+});
+
+// This is a Boolean 'Or' Operator
+$spark->addTag("Logic", function($html, $inner) {
+    $inner = str_replace(array("\n", " "), "", $inner);
+    if ($inner == "TrueFalse") return "True";
+    if ($inner == "FalseTrue") return "True";
+    if ($inner == "TrueTrue") return "True";
+    return "False";
+});
+
+// This is a simple Passthrough
+$spark->addTag("Pass", function($html, $inner) {
+    return $inner;
 });
 
 // Render out
