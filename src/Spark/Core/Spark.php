@@ -31,7 +31,7 @@ class Spark
 		$this->_namespace = $namespace;
 
 		$this->addTag("Version", function($html, $inner) {
-			return "<p>Spark Version 0.1_alpha</p>";
+			return "<p>Spark Version 0.2_dev</p>";
 		});
 	}
 
