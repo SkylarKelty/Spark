@@ -1,7 +1,4 @@
-<?php
-$t = microtime(true);
-require_once("src/loader.php");
-?>
+<?php require_once("src/loader.php"); ?>
 
 <!DOCTYPE html>
 <html>
@@ -17,7 +14,7 @@ require_once("src/loader.php");
                     print '<SparkPass></SparkPass>';
                 }
                 ?>
-                <p>Parsed 1000 snippets in <STIME> seconds</p>
+                <p>Parsed 1000 snippets in <STIME> seconds using <KBDATA>kb of memory</p>
             </div>
         </div>
         <div class="version">
@@ -27,7 +24,16 @@ require_once("src/loader.php");
 </html>
 
 <?php
+$page = ob_get_clean();
+
+$k = memory_get_usage();
+$t = microtime(true);
+
 global $spark;
-$out = $spark->run(ob_get_clean());
-print str_replace("<STIME>", round((microtime(true) - $t), 3), $out);
+$out = $spark->run($page);
+
+$out = str_replace("<STIME>", round((microtime(true) - $t), 3), $out);
+$out = str_replace("<KBDATA>", round((memory_get_peak_usage() - $k) / 1024), $out);
+
+print $out;
 ?>
