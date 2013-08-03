@@ -55,10 +55,17 @@ class Spark
 		// Reset tokens
 		$this->_tokens = array();
 
+		// Breakup the tags
 		$lines = $this->breakup($html);
+
+		// Tokenise all namespaced tags
 		$html = $this->tokenise($lines);
+
+		// Replace tags with data
 		$html = $this->replace($html);
-		print ($html);
+
+		// Post-process and output
+		print $this->postProcess($html);
 	}
 
 	/**
@@ -155,5 +162,12 @@ class Spark
 		}
 
 		return $html;
+	}
+
+	/**
+	 * Post-processor to cleanup a page before output
+	 */
+	protected function postProcess($html) {
+		return trim($html);
 	}
 }
