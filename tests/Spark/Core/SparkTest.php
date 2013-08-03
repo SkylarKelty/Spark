@@ -68,4 +68,12 @@ class SparkTest extends PHPUnit_Framework_TestCase
 
       $this->assertEquals($expected_html, $result);
    }
+   
+   public function testBadHTML() {
+      $html = '<html><head><title>Test</title></head><body><SparkVersion2></SparkVersion2></body></html>';
+      $expected_html = '<html><head><title>Test</title></head><body></body></html>';
+      $result = $this->_spark->run($html);
+
+      $this->assertEquals($expected_html, $result);
+   }
 }

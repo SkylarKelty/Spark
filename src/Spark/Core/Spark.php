@@ -25,6 +25,8 @@ class Spark
 	private $_embedded_tokens = array();
 	/** The last output we processed */
 	private $_output;
+	/** The last set of errors we encountered */
+	private $_errors;
 
 	/**
 	 * Initialise Spark
@@ -103,8 +105,10 @@ class Spark
 	 * @param string $html The HTML to render
 	 */
 	public function run($html) {
-		// Reset tokens
+		// Reset vars
+		$this->_errors = array();
 		$this->_tokens = array();
+		$this->_embedded_tokens = array();
 
 		// Breakup the tags
 		$lines = $this->breakup($html);
