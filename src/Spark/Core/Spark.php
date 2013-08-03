@@ -40,7 +40,7 @@ class Spark
 
 		// Add a demo tag
 		$this->addTag("Version", function($html, $inner) {
-			return '<a href="https://github.com/SkylarKelty/Spark" target="_blank">Spark</a> v1.1_dev';
+			return '<a href="https://github.com/SkylarKelty/Spark" target="_blank">Spark</a> v1.0';
 		});
 	}
 
