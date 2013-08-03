@@ -37,7 +37,6 @@ class Spark
 	public function __construct($namespace = "Spark", $callback = null) {
 		$this->_namespace = $namespace;
 		$this->_namespace_callback = $callback;
-		$this->_output = "";
 
 		// Add a demo tag
 		$this->addTag("Version", function($html, $inner) {
@@ -90,10 +89,9 @@ class Spark
 	 * 
 	 * @param string  $tag      The Tag to detect
 	 * @param mixed   $callback The Callback to call when the $tag is detected
-	 * @param integer $weight   The weight of the tag (higher runs first, lower last). Range: 0-100, default 50
 	 */
-	public function addTag($tag, $callback, $weight = 50) {
-		$this->_registered_elements[$tag] = array($callback, $weight);
+	public function addTag($tag, $callback) {
+		$this->_registered_elements[$tag] = $callback;
 	}
 
 	/**
@@ -171,7 +169,7 @@ class Spark
 				$tagname = $this->getTagName($line);
 
 				// Register the token
-				$this->_tokens[$token] = array($tagname, $token, $line);
+				$this->_tokens[$token] = array($tagname, $line);
 
 				// Link the token to the previous item on the stack
 				if (count($stack) > 0) {
@@ -227,18 +225,14 @@ class Spark
 		// Do we have anything still on the stack? (We shouldnt)
 		foreach ($stack as $err) {
 			$this->_errors[] = "Bad markup: No closing tag found for element: " . $err[1];
-
 			$token = $err[0];
 
 			// Remove that tag and push all the HTML back in
-			array_shift($this->_tokens[$token]);
 			array_shift($this->_tokens[$token]);
 
 			$html = str_replace("<SPARKTOKEN" . $token . ">", implode("", $this->_tokens[$token]), $html);
 			unset($this->_tokens[$token]);
 		}
-
-		// Re-order tokens according to weights
 
 		// Return HTML to what it looked like before we broke it up
 		$html = str_replace(array("\n<", ">\n"), array("<", ">"), $html);
@@ -252,14 +246,13 @@ class Spark
 	 * @param string $html The HTML to parse
 	 */
 	private function replace($html) {
-		for ($i = count($this->_tokens) - 1; $i >= 0; $i--) {
-			if (!isset($this->_tokens[$i])) {
+		for ($token = count($this->_tokens) - 1; $token >= 0; $token--) {
+			if (!isset($this->_tokens[$token])) {
 				continue;
 			}
 
-			$data = $this->_tokens[$i];
+			$data = $this->_tokens[$token];
 			$tag = array_shift($data);
-			$token = array_shift($data);
 
 			if (isset($this->_namespace_callback) || isset($this->_registered_elements[$tag])) {
 				$func = isset($this->_namespace_callback) ? $this->_namespace_callback : $this->_registered_elements[$tag][0];

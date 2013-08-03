@@ -110,7 +110,7 @@ class SparkTest extends PHPUnit_Framework_TestCase
       $expected_html = '<html><head><title>Test</title></head><body>123</body></html>';
       $result = $this->_spark->run($html);
 
-      //$this->assertEquals($expected_html, $result);
+      $this->assertEquals($expected_html, $result);
    }
    
    public function testBadTags() {
