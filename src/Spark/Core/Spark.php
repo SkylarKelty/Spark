@@ -174,19 +174,22 @@ class Spark
 	private function tokenise($lines) {
 		$html = "";
 
-		$ctag = '';
 		$token = 0;
 		$stack = array();
 		foreach ($lines as $line) {
 			// Do we have a valid tag?
 			if (stripos($line, "<" . $this->_namespace) !== false) {
+				// Get the tagname
+				$tagname = $this->getTagName($line);
+
 				// Register the token
-				$this->_tokens[$token] = array($line);
+				$this->_tokens[$token] = array($tagname, $line);
 
 				// Link the token to the previous item on the stack
 				if (count($stack) > 0) {
 					// List it as embedded, the parent is responsible for the output
 					$ptr = end($stack);
+					$ptr = $ptr[0];
 					$this->_tokens[$ptr][] = "[[SRM]]";
 					$this->_embedded_tokens[$token] = array($ptr, count($this->_tokens[$ptr]) - 1);
 				} else {
@@ -195,21 +198,49 @@ class Spark
 				}
 
 				// Add it to the stack
-				$stack[] = $token;
+				$stack[] = array($token, $tagname);
 
 				$token++;
-			} elseif (stripos($line, "</" . $this->_namespace) !== false) {
-				// Pop off the stack
-				$t = array_pop($stack);
-				$this->_tokens[$t][] =  $line;
 			} elseif (!empty($stack)) {
-				// Add the line to the stack
-				$t = array_pop($stack);
-				$this->_tokens[$t][] =  $line;
-				$stack[] = $t;
+				// Do we have a closing tag?
+				if (stripos($line, "</" . $this->_namespace) !== false) {
+					// Get the tagname
+					$tagname = $this->getTagName($line);
+
+					// Pop off the stack if we are expecting this to be here
+					$t = array_pop($stack);
+					if ($t[1] != $tagname) {
+						$stack[] = $t;
+						$this->_errors[] = "Bad markup: Extra or misplaced closing tag found for element: " . $tagname;
+					} else {
+						$this->_tokens[$t[0]][] = $line;
+					}
+				} else {
+					// Add the line to the current stack element
+					$t = end($stack);
+					$this->_tokens[$t[0]][] =  $line;
+				}
 			} else {
+				// Do we have a closing tag? If so, throw an error
+				if (stripos($line, "</" . $this->_namespace) !== false) {
+					$tagname = $this->getTagName($line);
+					$this->_errors[] = "Bad markup: Extra or misplaced closing tag found for element: " . $tagname;
+				}
+
 				$html .= $line . "\n";
 			}
+		}
+
+		// Do we have anything still on the stack? (We shouldnt)
+		foreach ($stack as $err) {
+			$this->_errors[] = "Bad markup: No closing tag found for element: " . $err[1];
+
+			$token = $err[0];
+
+			// Remove that tag and push all the HTML back in
+			array_shift($this->_tokens[$token]);
+			$html = str_replace("<SPARKTOKEN" . $token . ">", implode("\n", $this->_tokens[$token]), $html);
+			unset($this->_tokens[$token]);
 		}
 
 		// Return HTML to what it looked like before we broke it up
@@ -227,11 +258,12 @@ class Spark
 		$tlen = strlen("<" . $this->_namespace);
 
 		for ($token = count($this->_tokens) - 1; $token >= 0; $token--) {
+			if (!isset($this->_tokens[$token])) continue;
+
 			$data = $this->_tokens[$token];
 
-			$tag = $data[0];
-			$tag = substr($tag, $tlen);
-			$tag = substr($tag, 0, -1);
+			$tag = array_shift($data);
+			$tag = substr($tag, $tlen - 1);
 
 			if (isset($this->_namespace_callback) || isset($this->_registered_elements[$tag])) {
 				$func = isset($this->_namespace_callback) ? $this->_namespace_callback : $this->_registered_elements[$tag];
