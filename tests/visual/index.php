@@ -1,4 +1,5 @@
 <?php
+$t = microtime(true);
 ob_start();
 ?>
 
@@ -63,4 +64,7 @@ $spark->addTag("Pass", function($html, $inner) {
 
 // Render out
 $spark->render($ob);
+
+print "\n" . '<!--Finished in ' . round((microtime(true) - $t), 3) . ' seconds-->';
+phpinfo();
 ?>
