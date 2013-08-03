@@ -1,4 +1,5 @@
 <?php
+$t = microtime(true);
 ob_start();
 ?>
 
@@ -13,7 +14,7 @@ ob_start();
     </head>
     <body>
         <p>Hello world!</p>
-        <SparkVersion></SparkVersion>
+        <SparkVersion />
         <p>Non-Nested boolean switch result: <SparkSwitch>False</SparkSwitch></p>
         <p>Nested boolean switch result: <SparkSwitch>
             <SparkSwitch>True</SparkSwitch>
@@ -62,5 +63,7 @@ $spark->addTag("Pass", function($html, $inner) {
 });
 
 // Render out
-$spark->render($ob);
+print $spark->run($ob);
+
+print "\n" . '<!--Finished in ' . round((microtime(true) - $t), 3) . ' seconds-->';
 ?>

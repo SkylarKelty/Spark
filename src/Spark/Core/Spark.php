@@ -41,7 +41,7 @@ class Spark
 
 		// Add a demo tag
 		$this->addTag("Version", function($html, $inner) {
-			return "<p>Spark Version 0.2_alpha</p>";
+			return "<p>Spark Version 0.3_alpha</p>";
 		});
 	}
 
@@ -107,10 +107,10 @@ class Spark
 
 	/**
 	 * Returns the tag for a given html element
-	 * E.g. <SparkTest> will return SparkTest
+	 * @return <SparkTest> will return SparkTest
 	 */
 	public function getTagName($tag) {
-		$regex = '#</?(.*?)[ >]+#is';
+		$regex = '#</?(.*?)[ >/]+#is';
 		if (preg_match($regex, $tag, $matches)) {
 			return $matches[1];
 		}
@@ -118,13 +118,14 @@ class Spark
 	}
 
 	/**
-	 * Run through a page
-	 * Call this OR render, not both
+	 * Run through a page and return the resulting markup
 	 * 
 	 * @param string $html The HTML to render
+	 * @return The resulting markup
 	 */
 	public function run($html) {
 		// Reset vars
+		$this->_output = "";
 		$this->_errors = array();
 		$this->_tokens = array();
 		$this->_embedded_tokens = array();
@@ -142,17 +143,6 @@ class Spark
 		$this->_output = $this->postProcess($html);
 
 		return $this->_output;
-	}
-
-	/**
-	 * Render a page (run and output)
-	 * Call this OR run, not both
-	 * 
-	 * @param string $html The HTML to render
-	 */
-	public function render($html) {
-		// Process and output
-		print $this->run($html);
 	}
 
 	/**
@@ -197,8 +187,13 @@ class Spark
 					$html .= "<SPARKTOKEN" . $token . ">\n";
 				}
 
-				// Add it to the stack
-				$stack[] = array($token, $tagname);
+				// Are we empty?
+				$trimmed_line = trim($line);
+				if (strpos($trimmed_line, "/>") !== strlen($trimmed_line) - 2) {
+					// We are not an empty tag!
+					// Add it to the stack
+					$stack[] = array($token, $tagname);
+				}
 
 				$token++;
 			} elseif (!empty($stack)) {
