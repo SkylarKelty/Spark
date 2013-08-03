@@ -1,5 +1,5 @@
 <?php
-require_once("../../vendor/autoload.php");
+require_once(__dir__ . "/../../vendor/autoload.php");
 $spark = new Spark\Core\Spark();
 
 // This is a Boolean switch
@@ -22,3 +22,5 @@ $spark->addTag("Logic", function($html, $inner) {
 $spark->addTag("Pass", function($html, $inner) {
     return $inner;
 });
+
+ob_start();
