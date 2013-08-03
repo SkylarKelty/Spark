@@ -134,19 +134,12 @@ class Spark
 		$this->_tokens = array();
 		$this->_embedded_tokens = array();
 
-		// Breakup the tags
+		// Run through the stages
 		$lines = $this->breakup($html);
-
-		// Tokenise all namespaced tags
 		$html = $this->tokenise($lines);
+		$this->_output = $this->replace($html);
 
-		// Replace tags with data
-		$html = $this->replace($html);
-
-		// Post-process and set output
-		$this->_output = $this->postProcess($html);
-
-		return $this->_output;
+		return trim($this->_output);
 	}
 
 	/**
@@ -161,7 +154,7 @@ class Spark
 	}
 
 	/**
-	 * Tokenise a page
+	 * Tokenise all namespaced tags
 	 * 
 	 * @param string $lines The HTML lines to tokenise
 	 */
@@ -287,13 +280,5 @@ class Spark
 		}
 
 		return $html;
-	}
-
-	/**
-	 * Post-processor to cleanup a page before output.
-	 * This is really here just to be overridden
-	 */
-	protected function postProcess($html) {
-		return trim($html);
 	}
 }
