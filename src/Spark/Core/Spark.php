@@ -239,6 +239,7 @@ class Spark
 
 			// Remove that tag and push all the HTML back in
 			array_shift($this->_tokens[$token]);
+
 			$html = str_replace("<SPARKTOKEN" . $token . ">", implode("", $this->_tokens[$token]), $html);
 			unset($this->_tokens[$token]);
 		}
