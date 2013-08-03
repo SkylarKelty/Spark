@@ -6,6 +6,15 @@ body {
 	padding: 0;
 }
 
+a {
+	color: #FFF;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
 .container {
 	color: #FFF;
 	background-color: #000;
@@ -13,7 +22,7 @@ body {
 	border: 1px solid #000;
 	padding: 1%;
 	width: 48%;
-	margin: 80px 25%;
+	margin: 40px 25% 80px 25%;
 }
 
 .container h1 {
@@ -25,30 +34,19 @@ body {
 	font-size: 0.8em;
 }
 
-.version, .time p {
-	font-style: italic;
-	font-size: 0.8em;
-}
-
-.version, .time {
+.version {
+	width: 100%;
 	position: fixed;
 	left: 0;
-	width: 100%;
+	bottom: 0;
+
 	background-color: #000;
 	background-color: rgba(0,0,0,0.7);
-	text-align: center;
-	color: #FFF;
-}
-
-.version {
-	top: 0;
-	border-bottom: 1px solid #000;
-	border-bottom-color: rgba(0,0,0,0.4);
-}
-
-.time {
-	bottom: 0;
-	font-size: 0.9em;
 	border-top: 1px solid #000;
 	border-top-color: rgba(0,0,0,0.4);
+
+	color: #FFF;
+	text-align: center;
+	font-style: italic;
+	font-size: 0.8em;
 }
