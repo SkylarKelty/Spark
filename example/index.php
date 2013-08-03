@@ -41,9 +41,11 @@ require_once("src/loader.php");
             <SparkVersion />
         </div>
 
-        <?php
-        require_once("src/run.php");
-        print "\n" . '<p class="time">Page loaded in ' . round((microtime(true) - $t), 3) . ' seconds</p>';
-        ?>
+        <div class="time">
+            <?php
+            require_once("src/run.php");
+            print "\n" . '<p>Page loaded in ' . round((microtime(true) - $t), 3) . ' seconds</p>';
+            ?>
+        </div>
     </body>
 </html>
