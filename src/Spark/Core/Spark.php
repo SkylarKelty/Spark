@@ -251,8 +251,6 @@ class Spark
 	 * @param string $html The HTML to parse
 	 */
 	private function replace($html) {
-		$nlen = strlen($this->_namespace);
-
 		for ($token = count($this->_tokens) - 1; $token >= 0; $token--) {
 			if (!isset($this->_tokens[$token])) {
 				continue;
