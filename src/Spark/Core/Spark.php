@@ -113,9 +113,9 @@ class Spark
 	 * @return <SparkTest> will return SparkTest
 	 */
 	public function getTagName($tag) {
-		$regex = '#</?' . $this->_namespace . '(.*?)[ >/]+#is';
+		$regex = '#</?(' . $this->_namespace . ')?(.*?)[ >/]+#is';
 		if (preg_match($regex, $tag, $matches)) {
-			return $matches[1];
+			return empty($matches[2]) ? $matches[1] : $matches[2];
 		}
 		return $tag;
 	}

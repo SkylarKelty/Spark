@@ -97,6 +97,8 @@ class SparkTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('Test', $this->_spark->getTagName("</SparkTest>"));
       $this->assertEquals('Test', $this->_spark->getTagName("<SparkTest />"));
       $this->assertEquals('Test', $this->_spark->getTagName("<SparkTest/>"));
+      $this->assertEquals('Test', $this->_spark->getTagName("<Test/>"));
+      $this->assertEquals('Spark', $this->_spark->getTagName("<Spark/>"));
    }
    
    public function testBadTags() {
