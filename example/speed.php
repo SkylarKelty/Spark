@@ -10,11 +10,12 @@
             <h1>Speed Test</h1>
             <div class="tests">
                 <?php
-                for ($i = 0; $i <= 1000; $i++) {
+                $count = isset($_GET['count']) ? intval($_GET['count']) : 1000;
+                for ($i = 0; $i <= $count; $i++) {
                     print '<SparkPass></SparkPass>';
                 }
+                print '<p>Parsed '.$count.' snippets in <STIME> seconds using <KBDATA>kb of memory</p>';
                 ?>
-                <p>Parsed 1000 snippets in <STIME> seconds using <KBDATA>kb of memory</p>
             </div>
         </div>
         <div class="version">
