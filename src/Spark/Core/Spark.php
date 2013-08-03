@@ -237,6 +237,8 @@ class Spark
 			unset($this->_tokens[$token]);
 		}
 
+		// Re-order tokens according to weights
+
 		// Return HTML to what it looked like before we broke it up
 		$html = str_replace(array("\n<", ">\n"), array("<", ">"), $html);
 
