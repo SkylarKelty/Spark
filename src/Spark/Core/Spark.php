@@ -103,11 +103,10 @@ class Spark
 	/**
 	 * Breakup a page, ensures all tags are on a separate line.
 	 * Then return an array of lines
-	 * 
+	 *
 	 * @param string $html The HTML to break up
 	 */
 	private function breakup($html) {
-		$html = str_replace("\n", "", $html);
 		$html = str_replace(array("<", ">"), array("\n<", ">\n"), $html);
 		return explode("\n", $html);
 	}
@@ -157,6 +156,9 @@ class Spark
 			}
 		}
 
+		// Return HTML to what it looked like before we broke it up
+		$html = str_replace(array("\n<", ">\n"), array("<", ">"), $html);
+
 		return $html;
 	}
 
@@ -197,7 +199,8 @@ class Spark
 	}
 
 	/**
-	 * Post-processor to cleanup a page before output
+	 * Post-processor to cleanup a page before output.
+	 * This is really here just to be overridden
 	 */
 	protected function postProcess($html) {
 		return trim($html);

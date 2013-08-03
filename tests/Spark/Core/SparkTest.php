@@ -29,7 +29,7 @@ class SparkTest extends PHPUnit_Framework_TestCase
    	$result = $this->_spark->run($html);
 
    	// TODO - V0.3 should be non-destructive
-   	$result = str_replace("\n", "", $result);
+   	//$result = str_replace("\n", "", $result);
 
       $this->assertEquals($expected_html, $result);
    }
@@ -48,7 +48,7 @@ class SparkTest extends PHPUnit_Framework_TestCase
    	$result = $this->_spark->run($html);
 
    	// TODO - V0.3 should be non-destructive
-   	$result = str_replace("\n", "", $result);
+   	//$result = str_replace("\n", "", $result);
 
       $this->assertEquals($expected_html, $result);
    }
