@@ -1,14 +1,15 @@
 Spark
 =====
 
-High-performance Templating Engine designed to work with common WYSIWYG HTML editors.
+High-performance Template Parser designed to work inside a full templating engine or alongside an application.
+Whilst Spark can be used on its own it includes a very limited set of features and is really only designed to work alongside a larger system.
 
 Requires:
   - PHP 5.3 (or above)
 
 Spark takes a HTML page and tokenises all tags within a specified namespace (e.g. <Spark*>) it then runs through user-specified callbacks for each token and replaces the token with the result.
 
-The result of the project is a very simple template parser that can be hooked up to a more fully-featured templating engine.
+The result of this project is a very simple template parser that can be hooked up to a more fully-featured templating engine.
 
 ### Usage
 ```
