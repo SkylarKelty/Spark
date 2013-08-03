@@ -69,7 +69,7 @@ class SparkTest extends PHPUnit_Framework_TestCase
       $this->assertEquals($expected_html, $result);
    }
    
-   public function testBadHTML() {
+   public function testBadTags() {
       $html = '<html><head><title>Test</title></head><body><SparkVersion2></SparkVersion2></body></html>';
       $expected_html = '<html><head><title>Test</title></head><body></body></html>';
       $result = $this->_spark->run($html);
@@ -77,5 +77,28 @@ class SparkTest extends PHPUnit_Framework_TestCase
       $this->assertEquals($expected_html, $result);
 
       $this->assertEquals(array('SparkVersion2 is not a valid tag!'), $this->_spark->getErrors());
+   }
+   
+   public function testBadHTML() {
+
+      $this->_spark->addTag("Test", function($html, $inner) { return "Test"; });
+
+      // Test bad namespace HTML
+      $html = '<html><head><title>Test</title></head><body><SparkTest></SparkTest></SparkVersion></body></html>';
+      $expected_html = '<html><head><title>Test</title></head><body>Test</body></html>';
+      $result = $this->_spark->run($html);
+      $this->assertEquals($expected_html, $result);
+
+      // Test bad namespace HTML
+      $html = '<html><head><title>Test</title></head><body><SparkTest></SparkTest><SparkVersion></body></html>';
+      $expected_html = '<html><head><title>Test</title></head><body>Test</body></html>';
+      $result = $this->_spark->run($html);
+      $this->assertEquals($expected_html, $result);
+
+      // Test bad normal HTML
+      $html = '<html><head><title>Test</title></head><body><SparkTest></SparkTest></p></body></html>';
+      $expected_html = '<html><head><title>Test</title></head><body>Test</body></html>';
+      $result = $this->_spark->run($html);
+      $this->assertEquals($expected_html, $result);
    }
 }
