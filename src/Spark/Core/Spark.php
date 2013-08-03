@@ -106,6 +106,18 @@ class Spark
 	}
 
 	/**
+	 * Returns the tag for a given html element
+	 * E.g. <SparkTest> will return SparkTest
+	 */
+	public function getTagName($tag) {
+		$regex = '#</?(.*?)[ >]+#is';
+		if (preg_match($regex, $tag, $matches)) {
+			return $matches[1];
+		}
+		return $tag;
+	}
+
+	/**
 	 * Run through a page
 	 * Call this OR render, not both
 	 * 
@@ -162,6 +174,7 @@ class Spark
 	private function tokenise($lines) {
 		$html = "";
 
+		$ctag = '';
 		$token = 0;
 		$stack = array();
 		foreach ($lines as $line) {
