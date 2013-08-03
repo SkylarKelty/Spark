@@ -18,4 +18,14 @@ class SparkTest extends PHPUnit_Framework_TestCase
 
       $this->assertEquals(2, count($this->_spark->getTags()));
    }
+   
+   public function testSimpleRender() {
+
+		$this->_spark->addTag("Test", function($html, $inner) { return "Example"; });
+
+   	$html = '<html><head><title>Test</title></head><body><SparkTest></SparkTest></body></html>';
+   	$expected_html = '<html><head><title>Test</title></head><body>Example</body></html>';
+
+      $this->assertEquals($expected_html, $this->_spark->render($html));
+   }
 }
