@@ -1,0 +1,54 @@
+body {
+	background: #EFEFEF url(http://lorempixel.com/1920/1080/abstract);
+	background-size: 100% auto;
+	font-family: 'Open Sans', sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	color: #FFF;
+	background-color: #000;
+	background-color: rgba(0,0,0,0.7);
+	border: 1px solid #000;
+	padding: 1%;
+	width: 48%;
+	margin: 80px 25%;
+}
+
+.container h1 {
+	width: 100%;
+	border-bottom: 1px solid #CCC;
+}
+
+.container .tests {
+	font-size: 0.8em;
+}
+
+.version, .time p {
+	font-style: italic;
+	font-size: 0.8em;
+}
+
+.version, .time {
+	position: fixed;
+	left: 0;
+	width: 100%;
+	background-color: #000;
+	background-color: rgba(0,0,0,0.7);
+	text-align: center;
+	color: #FFF;
+}
+
+.version {
+	top: 0;
+	border-bottom: 1px solid #000;
+	border-bottom-color: rgba(0,0,0,0.4);
+}
+
+.time {
+	bottom: 0;
+	font-size: 0.9em;
+	border-top: 1px solid #000;
+	border-top-color: rgba(0,0,0,0.4);
+}

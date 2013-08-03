@@ -1,7 +1,8 @@
 Spark
 =====
+*The 300 line template parser*
 
-High-performance Template Parser designed to work inside a full templating engine or alongside an application.
+A high-performance Template Parser designed to work inside a full templating engine or alongside an application.
 Whilst Spark can be used on its own it includes a very limited set of features and is really only designed to work alongside a larger system.
 
 Requires:
