@@ -115,7 +115,7 @@ class Spark
 	 * @return <SparkTest> will return SparkTest
 	 */
 	public function getTagName($tag) {
-		$regex = '#</?(.*?)[ >/]+#is';
+		$regex = '#</?' . $this->_namespace . '(.*?)[ >/]+#is';
 		if (preg_match($regex, $tag, $matches)) {
 			return $matches[1];
 		}
@@ -251,7 +251,7 @@ class Spark
 	 * @param string $html The HTML to parse
 	 */
 	private function replace($html) {
-		$tlen = strlen("<" . $this->_namespace);
+		$nlen = strlen($this->_namespace);
 
 		for ($token = count($this->_tokens) - 1; $token >= 0; $token--) {
 			if (!isset($this->_tokens[$token])) {
@@ -259,7 +259,7 @@ class Spark
 			}
 
 			$data = $this->_tokens[$token];
-			$tag = substr(array_shift($data), $tlen - 1);
+			$tag = array_shift($data);
 
 			if (isset($this->_namespace_callback) || isset($this->_registered_elements[$tag])) {
 				$func = isset($this->_namespace_callback) ? $this->_namespace_callback : $this->_registered_elements[$tag][0];
