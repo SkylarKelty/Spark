@@ -197,8 +197,13 @@ class Spark
 					$html .= "<SPARKTOKEN" . $token . ">\n";
 				}
 
-				// Add it to the stack
-				$stack[] = array($token, $tagname);
+				// Are we empty?
+				$trimmed_line = trim($line);
+				if (strpos($trimmed_line, "/>") !== strlen($trimmed_line) - 2) {
+					// We are not an empty tag!
+					// Add it to the stack
+					$stack[] = array($token, $tagname);
+				}
 
 				$token++;
 			} elseif (!empty($stack)) {
