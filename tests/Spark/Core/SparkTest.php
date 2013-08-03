@@ -39,6 +39,28 @@ class SparkTest extends PHPUnit_Framework_TestCase
       $this->assertEquals($expected_html, $result);
    }
    
+   public function testEmptyTags() {
+      $this->_spark->addTag("Test", function($html, $inner) { return "Example"; });
+
+      $html = '<html><head><title>Test</title></head><body><SparkTest /></body></html>';
+      $expected_html = '<html><head><title>Test</title></head><body>Example</body></html>';
+      $result = $this->_spark->run($html);
+
+      $this->assertEquals($expected_html, $result);
+
+      $html = '<html><head><title>Test</title></head><body><SparkTest /><SparkTest /></body></html>';
+      $expected_html = '<html><head><title>Test</title></head><body>ExampleExample</body></html>';
+      $result = $this->_spark->run($html);
+
+      $this->assertEquals($expected_html, $result);
+
+      $html = '<html><head><title>Test</title></head><body><SparkTest /><SparkTest></SparkTest></body></html>';
+      $expected_html = '<html><head><title>Test</title></head><body>ExampleExample</body></html>';
+      $result = $this->_spark->run($html);
+
+      $this->assertEquals($expected_html, $result);
+   }
+   
    public function testNestedRender() {
 		// This is a Boolean switch
 		$this->_spark->addTag("Switch", function($html, $inner) {
@@ -73,6 +95,8 @@ class SparkTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('test', $this->_spark->getTagName("<test>"));
       $this->assertEquals('test', $this->_spark->getTagName("<test a='l'>"));
       $this->assertEquals('test', $this->_spark->getTagName("</test>"));
+      $this->assertEquals('test', $this->_spark->getTagName("<test />"));
+      $this->assertEquals('test', $this->_spark->getTagName("<test/>"));
    }
    
    public function testBadTags() {
