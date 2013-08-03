@@ -75,5 +75,7 @@ class SparkTest extends PHPUnit_Framework_TestCase
       $result = $this->_spark->run($html);
 
       $this->assertEquals($expected_html, $result);
+
+      $this->assertEquals(array('SparkVersion2 is not a valid tag!'), $this->_spark->getErrors());
    }
 }

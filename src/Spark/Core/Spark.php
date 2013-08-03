@@ -74,6 +74,13 @@ class Spark
 	}
 
 	/**
+	 * Returns the last set of errors
+	 */
+	public function getErrors() {
+		return $this->_errors;
+	}
+
+	/**
 	 * Register a callback related to a tag.
 	 * Everytime spark encountrers the tag it will call the callback function with the element's markup
 	 * 
@@ -228,6 +235,9 @@ class Spark
 					$ptrs = $this->_embedded_tokens[$token];
 					$this->_tokens[$ptrs[0]][$ptrs[1]] = $markup;
 				}
+			} else {
+				$this->_errors[] = $this->_namespace . $tag . " is not a valid tag!";
+				$html = str_replace("<SPARKTOKEN" . $token . ">", "", $html);
 			}
 		}
 
