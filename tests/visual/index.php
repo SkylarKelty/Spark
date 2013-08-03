@@ -8,32 +8,35 @@ ob_start();
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Example</title>
+        <title>Home | Spark</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="style/main.css" />
     </head>
     <body>
-        <p>Hello world!</p>
-        <SparkVersion />
-        <p>Non-Nested boolean switch result: <SparkSwitch>False</SparkSwitch></p>
-        <p>Nested boolean switch result: <SparkSwitch>
-            <SparkSwitch>True</SparkSwitch>
-        </SparkSwitch></p>
-        <p>Multi-Nested boolean switch result: <SparkSwitch>
-                <SparkSwitch>
-                    <SparkSwitch>False</SparkSwitch>
-                </SparkSwitch>
-        </SparkSwitch></p>
-        <p>Nested boolean logic result: <SparkLogic>
-                <SparkPass>
-                    True
-                </SparkPass>
-                <SparkPass>
-                    False
-                </SparkPass>
-        </SparkLogic></p>
-    </body>
-</html>
+        <div class="container">
+            <h1>Welcome to Spark!</h1>
+            <h3>Running Tests...</h3>
+            <p>Non-Nested boolean switch result: <SparkSwitch>False</SparkSwitch></p>
+            <p>Nested boolean switch result: <SparkSwitch>
+                <SparkSwitch>True</SparkSwitch>
+            </SparkSwitch></p>
+            <p>Multi-Nested boolean switch result: <SparkSwitch>
+                    <SparkSwitch>
+                        <SparkSwitch>False</SparkSwitch>
+                    </SparkSwitch>
+            </SparkSwitch></p>
+            <p>Nested boolean logic result: <SparkLogic>
+                    <SparkPass>
+                        True
+                    </SparkPass>
+                    <SparkPass>
+                        False
+                    </SparkPass>
+            </SparkLogic></p>
+        </div>
+        <div class="version"><SparkVersion /></div>
 
 <?php
 $ob = ob_get_clean();
@@ -65,5 +68,7 @@ $spark->addTag("Pass", function($html, $inner) {
 // Render out
 print $spark->run($ob);
 
-print "\n" . '<!--Finished in ' . round((microtime(true) - $t), 3) . ' seconds-->';
+print "\n" . '<p class="time">Page load in ' . round((microtime(true) - $t), 3) . ' seconds</p>';
 ?>
+    </body>
+</html>

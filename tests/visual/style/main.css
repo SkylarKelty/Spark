@@ -1,0 +1,35 @@
+body {
+	background-color: #EFEFEF;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+	width: 48%;
+	margin: 5% 25%;
+	border-radius: 20px;
+	background-color: #FFF;
+	border: 1px solid #CCC;
+	padding: 1%;
+}
+
+.container h1 {
+	width: 100%;
+	border-bottom: 1px solid #CCC;
+}
+
+.version, .time {
+	font-style: italic;
+	font-size: 0.8em;
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 0 20px;
+}
+
+.time {
+	left: auto;
+	right: auto;
+	top: auto;
+	bottom: 0;
+	font-size: 0.7em;
+}
