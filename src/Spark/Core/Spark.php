@@ -31,6 +31,7 @@ class Spark
 	 */
 	public function __construct($namespace = "Spark") {
 		$this->_namespace = $namespace;
+		$this->_output = "";
 
 		// Add a demo tag
 		$this->addTag("Version", function($html, $inner) {
@@ -54,6 +55,13 @@ class Spark
 	 */
 	public function getTags() {
 		return $this->_registered_elements;
+	}
+
+	/**
+	 * Returns the last result the parser output
+	 */
+	public function getResult() {
+		return $this->_output;
 	}
 
 	/**
