@@ -20,16 +20,11 @@ class SparkTest extends PHPUnit_Framework_TestCase
    }
    
    public function testSimpleRender() {
-
 		$this->_spark->addTag("Test", function($html, $inner) { return "Example"; });
 
    	$html = '<html><head><title>Test</title></head><body><SparkTest></SparkTest></body></html>';
    	$expected_html = '<html><head><title>Test</title></head><body>Example</body></html>';
-
    	$result = $this->_spark->run($html);
-
-   	// TODO - V0.3 should be non-destructive
-   	//$result = str_replace("\n", "", $result);
 
       $this->assertEquals($expected_html, $result);
    }
@@ -44,11 +39,7 @@ class SparkTest extends PHPUnit_Framework_TestCase
 
    	$html = '<html><head><title>Test</title></head><body><SparkSwitch><SparkSwitch><SparkSwitch>False</SparkSwitch></SparkSwitch></SparkSwitch></body></html>';
    	$expected_html = '<html><head><title>Test</title></head><body>True</body></html>';
-
    	$result = $this->_spark->run($html);
-
-   	// TODO - V0.3 should be non-destructive
-   	//$result = str_replace("\n", "", $result);
 
       $this->assertEquals($expected_html, $result);
    }

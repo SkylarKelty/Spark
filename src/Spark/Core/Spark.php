@@ -103,7 +103,7 @@ class Spark
 	/**
 	 * Breakup a page, ensures all tags are on a separate line.
 	 * Then return an array of lines
-	 *
+	 * 
 	 * @param string $html The HTML to break up
 	 */
 	private function breakup($html) {
