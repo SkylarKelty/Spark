@@ -1,5 +1,5 @@
 {
-   "name": "Spark/Core",
+   "name": "skylarkelty/spark",
    "description": "A high-performance Template Parser designed to work inside a full templating engine or alongside an application.",
    "type": "library",
    "keywords": [
