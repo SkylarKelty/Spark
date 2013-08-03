@@ -1,13 +1,13 @@
 {
-   "name": "Spark/Spark",
-   "description": "High-performance Templating Engine designed to work with common WYSIWYG HTML editors.",
+   "name": "skylarkelty/spark",
+   "description": "A high-performance Template Parser designed to work inside a full templating engine or alongside an application.",
    "type": "library",
    "keywords": [
       "template",
       "templating"
    ],
    "homepage": "https://github.com/SkylarKelty/Spark",
-   "license": "Commercial",
+   "license": "Apache License v2.0",
    "authors": [{
       "name": "Skylar Tristan Kelty",
       "email": "skylarkelty@gmail.com",
