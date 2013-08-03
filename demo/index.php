@@ -41,7 +41,7 @@ ob_start();
 <?php
 $ob = ob_get_clean();
 
-require_once("../../vendor/autoload.php");
+require_once("../vendor/autoload.php");
 $spark = new Spark\Core\Spark();
 
 // This is a Boolean switch
