@@ -45,35 +45,10 @@ class Spark
 	}
 
 	/**
-	 * Set the namespace
-	 * 
-	 * @param string $namespace The namespace this parser should use
-	 */
-	public function setNamespace($namespace) {
-		$this->_namespace = $namespace;
-	}
-
-	/**
 	 * Returns the namespace
 	 */
 	public function getNamespace() {
 		return $this->_namespace;
-	}
-
-	/**
-	 * Set the namespace callback
-	 * 
-	 * @param method $callback The callback method this parser should use for all tags
-	 */
-	public function setNamespaceCallback($callback) {
-		$this->_namespace_callback = $callback;
-	}
-
-	/**
-	 * Returns the namespace callback
-	 */
-	public function getNamespaceCallback() {
-		return $this->_namespace_callback;
 	}
 
 	/**
