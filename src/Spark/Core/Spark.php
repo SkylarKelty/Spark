@@ -1,7 +1,7 @@
 <?php
 /**
- * Spark is a high-performance templating engine designed to work
- * with common WYSIWYG editors.
+ * Spark is a high-performance template parser designed to work inside 
+ * a full templating engine or alongside an application.
  *
  * @author Skylar Kelty <skylarkelty@gmail.com>
  */
@@ -47,6 +47,8 @@ class Spark
 
 	/**
 	 * Set the namespace
+	 * 
+	 * @param string $namespace The namespace this parser should use
 	 */
 	public function setNamespace($namespace) {
 		$this->_namespace = $namespace;
@@ -61,6 +63,8 @@ class Spark
 
 	/**
 	 * Set the namespace callback
+	 * 
+	 * @param method $callback The callback method this parser should use for all tags
 	 */
 	public function setNamespaceCallback($callback) {
 		$this->_namespace_callback = $callback;
@@ -163,9 +167,9 @@ class Spark
 	 */
 	private function tokenise($lines) {
 		$html = "";
-
 		$token = 0;
 		$stack = array();
+
 		foreach ($lines as $line) {
 			// Do we have a valid tag?
 			if (stripos($line, "<" . $this->_namespace) !== false) {
@@ -196,7 +200,7 @@ class Spark
 				}
 
 				$token++;
-			} elseif (!empty($stack)) {
+			} else if (!empty($stack)) {
 				// Do we have a closing tag?
 				if (stripos($line, "</" . $this->_namespace) !== false) {
 					// Get the tagname
@@ -254,12 +258,12 @@ class Spark
 		$tlen = strlen("<" . $this->_namespace);
 
 		for ($token = count($this->_tokens) - 1; $token >= 0; $token--) {
-			if (!isset($this->_tokens[$token])) continue;
+			if (!isset($this->_tokens[$token])) {
+				continue;
+			}
 
 			$data = $this->_tokens[$token];
-
-			$tag = array_shift($data);
-			$tag = substr($tag, $tlen - 1);
+			$tag = substr(array_shift($data), $tlen - 1);
 
 			if (isset($this->_namespace_callback) || isset($this->_registered_elements[$tag])) {
 				$func = isset($this->_namespace_callback) ? $this->_namespace_callback : $this->_registered_elements[$tag];
