@@ -93,7 +93,7 @@ class Spark
 	 * @param integer $weight   The weight of the tag (higher runs first, lower last). Range: 0-100, default 50
 	 */
 	public function addTag($tag, $callback, $weight = 50) {
-		$this->_registered_elements[$tag] = $callback;
+		$this->_registered_elements[$tag] = array($callback, $weight);
 	}
 
 	/**
@@ -260,7 +260,7 @@ class Spark
 			$tag = substr(array_shift($data), $tlen - 1);
 
 			if (isset($this->_namespace_callback) || isset($this->_registered_elements[$tag])) {
-				$func = isset($this->_namespace_callback) ? $this->_namespace_callback : $this->_registered_elements[$tag];
+				$func = isset($this->_namespace_callback) ? $this->_namespace_callback : $this->_registered_elements[$tag][0];
 
 				// Grab markups
 				$snippet_markup = trim(implode("\n", $data));
