@@ -255,7 +255,7 @@ class Spark
 			$tag = array_shift($data);
 
 			if (isset($this->_namespace_callback) || isset($this->_registered_elements[$tag])) {
-				$func = isset($this->_namespace_callback) ? $this->_namespace_callback : $this->_registered_elements[$tag][0];
+				$func = isset($this->_namespace_callback) ? $this->_namespace_callback : $this->_registered_elements[$tag];
 
 				// Grab markups
 				$snippet_markup = trim(implode("\n", $data));
