@@ -7,16 +7,6 @@ class SparkTest extends PHPUnit_Framework_TestCase
       $this->_spark = new Spark\Core\Spark();
    }
    
-   public function testNamespace() {
-      $this->_spark->setNamespace("Testing");
-
-      $this->assertEquals("Testing", $this->_spark->getNamespace());
-
-      $this->_spark->setNamespace("Spark");
-
-      $this->assertEquals("Spark", $this->_spark->getNamespace());
-   }
-   
    public function testLoadingTags() {
       $this->assertEquals(1, count($this->_spark->getTags()));
 
@@ -81,9 +71,6 @@ class SparkTest extends PHPUnit_Framework_TestCase
          return "Caught It!";
       });
 
-      $this->assertEquals("Spark", $this->_spark->getNamespace());
-
-
       $html = '<html><head><title>Test</title></head><body><SparkTest>test</SparkTest><SparkTest2>test!</SparkTest2></body></html>';
       $expected_html = '<html><head><title>Test</title></head><body>Caught It!Caught It!</body></html>';
       $result = $spark->run($html);
@@ -92,11 +79,13 @@ class SparkTest extends PHPUnit_Framework_TestCase
    }
 
    public function testTagName() {
-      $this->assertEquals('test', $this->_spark->getTagName("<test>"));
-      $this->assertEquals('test', $this->_spark->getTagName("<test a='l'>"));
-      $this->assertEquals('test', $this->_spark->getTagName("</test>"));
-      $this->assertEquals('test', $this->_spark->getTagName("<test />"));
-      $this->assertEquals('test', $this->_spark->getTagName("<test/>"));
+      $this->assertEquals('SparkTest', $this->_spark->getTagName("<SparkTest>"));
+      $this->assertEquals('SparkTest', $this->_spark->getTagName("<SparkTest a='l'>"));
+      $this->assertEquals('SparkTest', $this->_spark->getTagName("</SparkTest>"));
+      $this->assertEquals('SparkTest', $this->_spark->getTagName("<SparkTest />"));
+      $this->assertEquals('SparkTest', $this->_spark->getTagName("<SparkTest/>"));
+      $this->assertEquals('Test', $this->_spark->getTagName("<Test/>"));
+      $this->assertEquals('Spark', $this->_spark->getTagName("<Spark/>"));
    }
    
    public function testBadTags() {

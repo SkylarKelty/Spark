@@ -1,5 +1,4 @@
 <?php
-$ob = ob_get_clean();
+// Render the page
 global $spark;
-// Render out
-print $spark->run($ob);
+print $spark->run(ob_get_clean());

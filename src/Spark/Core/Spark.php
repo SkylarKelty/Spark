@@ -37,21 +37,11 @@ class Spark
 	public function __construct($namespace = "Spark", $callback = null) {
 		$this->_namespace = $namespace;
 		$this->_namespace_callback = $callback;
-		$this->_output = "";
 
 		// Add a demo tag
 		$this->addTag("Version", function($html, $inner) {
-			return "<p>Spark V0.5</p>";
+			return '<a href="https://github.com/SkylarKelty/Spark" target="_blank">Spark</a> v1.0';
 		});
-	}
-
-	/**
-	 * Set the namespace
-	 * 
-	 * @param string $namespace The namespace this parser should use
-	 */
-	public function setNamespace($namespace) {
-		$this->_namespace = $namespace;
 	}
 
 	/**
@@ -59,22 +49,6 @@ class Spark
 	 */
 	public function getNamespace() {
 		return $this->_namespace;
-	}
-
-	/**
-	 * Set the namespace callback
-	 * 
-	 * @param method $callback The callback method this parser should use for all tags
-	 */
-	public function setNamespaceCallback($callback) {
-		$this->_namespace_callback = $callback;
-	}
-
-	/**
-	 * Returns the namespace callback
-	 */
-	public function getNamespaceCallback() {
-		return $this->_namespace_callback;
 	}
 
 	/**
@@ -88,11 +62,11 @@ class Spark
 	 * Register a callback related to a tag.
 	 * Everytime spark encountrers the tag it will call the callback function with the element's markup
 	 * 
-	 * @param string $tag      The Tag to detect
-	 * @param mixed  $callback The Callback to call when the $tag is detected
+	 * @param string  $tag      The Tag to detect
+	 * @param mixed   $callback The Callback to call when the $tag is detected
 	 */
 	public function addTag($tag, $callback) {
-		$this->_registered_elements[$tag] = $callback;
+		$this->_registered_elements[$this->_namespace . $tag] = $callback;
 	}
 
 	/**
@@ -134,19 +108,12 @@ class Spark
 		$this->_tokens = array();
 		$this->_embedded_tokens = array();
 
-		// Breakup the tags
+		// Run through the stages
 		$lines = $this->breakup($html);
-
-		// Tokenise all namespaced tags
 		$html = $this->tokenise($lines);
+		$this->_output = $this->replace($html);
 
-		// Replace tags with data
-		$html = $this->replace($html);
-
-		// Post-process and set output
-		$this->_output = $this->postProcess($html);
-
-		return $this->_output;
+		return trim($this->_output);
 	}
 
 	/**
@@ -161,7 +128,7 @@ class Spark
 	}
 
 	/**
-	 * Tokenise a page
+	 * Tokenise all namespaced tags
 	 * 
 	 * @param string $lines The HTML lines to tokenise
 	 */
@@ -233,7 +200,6 @@ class Spark
 		// Do we have anything still on the stack? (We shouldnt)
 		foreach ($stack as $err) {
 			$this->_errors[] = "Bad markup: No closing tag found for element: " . $err[1];
-
 			$token = $err[0];
 
 			// Remove that tag and push all the HTML back in
@@ -255,15 +221,13 @@ class Spark
 	 * @param string $html The HTML to parse
 	 */
 	private function replace($html) {
-		$tlen = strlen("<" . $this->_namespace);
-
 		for ($token = count($this->_tokens) - 1; $token >= 0; $token--) {
 			if (!isset($this->_tokens[$token])) {
 				continue;
 			}
 
 			$data = $this->_tokens[$token];
-			$tag = substr(array_shift($data), $tlen - 1);
+			$tag = array_shift($data);
 
 			if (isset($this->_namespace_callback) || isset($this->_registered_elements[$tag])) {
 				$func = isset($this->_namespace_callback) ? $this->_namespace_callback : $this->_registered_elements[$tag];
@@ -281,19 +245,11 @@ class Spark
 					$this->_tokens[$ptrs[0]][$ptrs[1]] = $markup;
 				}
 			} else {
-				$this->_errors[] = $this->_namespace . $tag . " is not a valid tag!";
+				$this->_errors[] = $tag . " is not a valid tag!";
 				$html = str_replace("<SPARKTOKEN" . $token . ">", "", $html);
 			}
 		}
 
 		return $html;
-	}
-
-	/**
-	 * Post-processor to cleanup a page before output.
-	 * This is really here just to be overridden
-	 */
-	protected function postProcess($html) {
-		return trim($html);
 	}
 }
