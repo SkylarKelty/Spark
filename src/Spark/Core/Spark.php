@@ -171,7 +171,7 @@ class Spark
 				$tagname = $this->getTagName($line);
 
 				// Register the token
-				$this->_tokens[$token] = array($tagname, $line);
+				$this->_tokens[$token] = array($tagname, $token, $line);
 
 				// Link the token to the previous item on the stack
 				if (count($stack) > 0) {
@@ -232,6 +232,7 @@ class Spark
 
 			// Remove that tag and push all the HTML back in
 			array_shift($this->_tokens[$token]);
+			array_shift($this->_tokens[$token]);
 
 			$html = str_replace("<SPARKTOKEN" . $token . ">", implode("", $this->_tokens[$token]), $html);
 			unset($this->_tokens[$token]);
@@ -251,13 +252,14 @@ class Spark
 	 * @param string $html The HTML to parse
 	 */
 	private function replace($html) {
-		for ($token = count($this->_tokens) - 1; $token >= 0; $token--) {
-			if (!isset($this->_tokens[$token])) {
+		for ($i = count($this->_tokens) - 1; $i >= 0; $i--) {
+			if (!isset($this->_tokens[$i])) {
 				continue;
 			}
 
-			$data = $this->_tokens[$token];
+			$data = $this->_tokens[$i];
 			$tag = array_shift($data);
+			$token = array_shift($data);
 
 			if (isset($this->_namespace_callback) || isset($this->_registered_elements[$tag])) {
 				$func = isset($this->_namespace_callback) ? $this->_namespace_callback : $this->_registered_elements[$tag][0];
