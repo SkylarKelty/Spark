@@ -91,7 +91,7 @@ class Spark
 	 * @param mixed   $callback The Callback to call when the $tag is detected
 	 */
 	public function addTag($tag, $callback) {
-		$this->_registered_elements[$tag] = $callback;
+		$this->_registered_elements[$this->_namespace . $tag] = $callback;
 	}
 
 	/**
@@ -113,9 +113,9 @@ class Spark
 	 * @return <SparkTest> will return SparkTest
 	 */
 	public function getTagName($tag) {
-		$regex = '#</?(' . $this->_namespace . ')?(.*?)[ >/]+#is';
+		$regex = '#</?(.*?)[ >/]+#is';
 		if (preg_match($regex, $tag, $matches)) {
-			return empty($matches[2]) ? $matches[1] : $matches[2];
+			return $matches[1];
 		}
 		return $tag;
 	}
@@ -270,7 +270,7 @@ class Spark
 					$this->_tokens[$ptrs[0]][$ptrs[1]] = $markup;
 				}
 			} else {
-				$this->_errors[] = $this->_namespace . $tag . " is not a valid tag!";
+				$this->_errors[] = $tag . " is not a valid tag!";
 				$html = str_replace("<SPARKTOKEN" . $token . ">", "", $html);
 			}
 		}

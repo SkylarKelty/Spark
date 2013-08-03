@@ -92,11 +92,11 @@ class SparkTest extends PHPUnit_Framework_TestCase
    }
 
    public function testTagName() {
-      $this->assertEquals('Test', $this->_spark->getTagName("<SparkTest>"));
-      $this->assertEquals('Test', $this->_spark->getTagName("<SparkTest a='l'>"));
-      $this->assertEquals('Test', $this->_spark->getTagName("</SparkTest>"));
-      $this->assertEquals('Test', $this->_spark->getTagName("<SparkTest />"));
-      $this->assertEquals('Test', $this->_spark->getTagName("<SparkTest/>"));
+      $this->assertEquals('SparkTest', $this->_spark->getTagName("<SparkTest>"));
+      $this->assertEquals('SparkTest', $this->_spark->getTagName("<SparkTest a='l'>"));
+      $this->assertEquals('SparkTest', $this->_spark->getTagName("</SparkTest>"));
+      $this->assertEquals('SparkTest', $this->_spark->getTagName("<SparkTest />"));
+      $this->assertEquals('SparkTest', $this->_spark->getTagName("<SparkTest/>"));
       $this->assertEquals('Test', $this->_spark->getTagName("<Test/>"));
       $this->assertEquals('Spark', $this->_spark->getTagName("<Spark/>"));
    }
@@ -120,21 +120,21 @@ class SparkTest extends PHPUnit_Framework_TestCase
       $expected_html = '<html><head><title>Test</title></head><body>Test</SparkVersion></body></html>';
       $result = $this->_spark->run($html);
       $this->assertEquals($expected_html, $result);
-      $this->assertEquals(array('Bad markup: Extra or misplaced closing tag found for element: Version'), $this->_spark->getErrors());
+      $this->assertEquals(array('Bad markup: Extra or misplaced closing tag found for element: SparkVersion'), $this->_spark->getErrors());
 
       // Test bad namespace HTML
       $html = '<html><head><title>Test</title></head><body><SparkTest></SparkTest><SparkTest></body></html>';
       $expected_html = '<html><head><title>Test</title></head><body>Test<SparkTest></body></html>';
       $result = $this->_spark->run($html);
       $this->assertEquals($expected_html, $result);
-      $this->assertEquals(array('Bad markup: No closing tag found for element: Test'), $this->_spark->getErrors());
+      $this->assertEquals(array('Bad markup: No closing tag found for element: SparkTest'), $this->_spark->getErrors());
 
       // Test bad namespace HTML
       $html = '<html><head><title>Test</title></head><body><SparkTest></SparkTest><SparkTest><SparkTest></SparkTest></body></html>';
       $expected_html = '<html><head><title>Test</title></head><body>Test<SparkTest></body></html>';
       $result = $this->_spark->run($html);
       $this->assertEquals($expected_html, $result);
-      $this->assertEquals(array('Bad markup: No closing tag found for element: Test'), $this->_spark->getErrors());
+      $this->assertEquals(array('Bad markup: No closing tag found for element: SparkTest'), $this->_spark->getErrors());
 
       // Test bad normal HTML
       $html = '<html><head><title>Test</title></head><body><SparkTest></SparkTest></p></body></html>';
