@@ -7,6 +7,16 @@ class SparkTest extends PHPUnit_Framework_TestCase
       $this->_spark = new Spark\Core\Spark();
    }
    
+   public function testNamespace() {
+      $this->_spark->setNamespace("Testing");
+
+      $this->assertEquals("Testing", $this->_spark->getNamespace());
+
+      $this->_spark->setNamespace("Spark");
+
+      $this->assertEquals("Spark", $this->_spark->getNamespace());
+   }
+   
    public function testLoadingTags() {
       $this->assertEquals(1, count($this->_spark->getTags()));
 
@@ -40,6 +50,21 @@ class SparkTest extends PHPUnit_Framework_TestCase
    	$html = '<html><head><title>Test</title></head><body><SparkSwitch><SparkSwitch><SparkSwitch>False</SparkSwitch></SparkSwitch></SparkSwitch></body></html>';
    	$expected_html = '<html><head><title>Test</title></head><body>True</body></html>';
    	$result = $this->_spark->run($html);
+
+      $this->assertEquals($expected_html, $result);
+   }
+   
+   public function testNamespaceCallback() {
+      $spark = new Spark\Core\Spark("Spark", function($html, $inner) {
+         return "Caught It!";
+      });
+
+      $this->assertEquals("Spark", $this->_spark->getNamespace());
+
+
+      $html = '<html><head><title>Test</title></head><body><SparkTest>test</SparkTest><SparkTest2>test!</SparkTest2></body></html>';
+      $expected_html = '<html><head><title>Test</title></head><body>Caught It!Caught It!</body></html>';
+      $result = $spark->run($html);
 
       $this->assertEquals($expected_html, $result);
    }
