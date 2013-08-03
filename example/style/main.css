@@ -21,6 +21,10 @@ body {
 	border-bottom: 1px solid #CCC;
 }
 
+.container .tests {
+	font-size: 0.8em;
+}
+
 .version, .time p {
 	font-style: italic;
 	font-size: 0.8em;

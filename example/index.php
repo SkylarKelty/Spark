@@ -17,24 +17,26 @@ require_once("src/loader.php");
     <body>
         <div class="container">
             <h1>Welcome to Spark!</h1>
-            <h3>Running Tests...</h3>
-            <p>Non-Nested boolean switch result: <SparkSwitch>False</SparkSwitch></p>
-            <p>Nested boolean switch result: <SparkSwitch>
-                <SparkSwitch>True</SparkSwitch>
-            </SparkSwitch></p>
-            <p>Multi-Nested boolean switch result: <SparkSwitch>
-                    <SparkSwitch>
-                        <SparkSwitch>False</SparkSwitch>
-                    </SparkSwitch>
-            </SparkSwitch></p>
-            <p>Nested boolean logic result: <SparkLogic>
-                    <SparkPass>
-                        True
-                    </SparkPass>
-                    <SparkPass>
-                        False
-                    </SparkPass>
-            </SparkLogic></p>
+            <p>This folder is a demonstration of how Spark can be used...</p>
+            <div class="tests">
+                <p>Non-Nested boolean switch result: <SparkSwitch>False</SparkSwitch></p>
+                <p>Nested boolean switch result: <SparkSwitch>
+                    <SparkSwitch>True</SparkSwitch>
+                </SparkSwitch></p>
+                <p>Multi-Nested boolean switch result: <SparkSwitch>
+                        <SparkSwitch>
+                            <SparkSwitch>False</SparkSwitch>
+                        </SparkSwitch>
+                </SparkSwitch></p>
+                <p>Nested boolean logic result: <SparkLogic>
+                        <SparkPass>
+                            True
+                        </SparkPass>
+                        <SparkPass>
+                            False
+                        </SparkPass>
+                </SparkLogic></p>
+            </div>
         </div>
 
         <div class="version">
