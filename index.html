@@ -32,7 +32,7 @@
       <section>
         <div id="title">
           <h1>Spark</h1>
-          <p>High-performance Templating Engine designed to work with common wysiwyg HTML editors</p>
+          <p>High-performance Template Parser designed to work inside a full templating engine or alongside an application.</p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/SkylarKelty">SkylarKelty</a></span>
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
@@ -41,7 +41,8 @@
         <h1>
 <a name="spark" class="anchor" href="#spark"><span class="octicon octicon-link"></span></a>Spark</h1>
 
-<p>High-performance Templating Engine designed to work with common WYSIWYG HTML editors.</p>
+<p>High-performance Template Parser designed to work inside a full templating engine or alongside an application.
+Whilst Spark can be used on its own it includes a very limited set of features and is really only designed to work alongside a larger system.</p>
 
 <p>Requires:</p>
 
@@ -49,7 +50,26 @@
 <li>PHP 5.3 (or above)</li>
 </ul><p>Spark takes a HTML page and tokenises all tags within a specified namespace (e.g. ) it then runs through user-specified callbacks for each token and replaces the token with the result.</p>
 
-<p>The result of the project is a very simple template parser that can be hooked up to a more fully-featured templating engine.</p>
+<p>The result of this project is a very simple template parser that can be hooked up to a more fully-featured templating engine.</p>
+
+<h3>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h3>
+
+<pre><code>$spark = new Spark\Core\Spark();
+print $spark-&gt;run('&lt;html&gt;&lt;body&gt;&lt;SparkVersion /&gt;&lt;/body&gt;&lt;/html&gt;');
+</code></pre>
+
+<h3>
+<a name="adding-a-tag" class="anchor" href="#adding-a-tag"><span class="octicon octicon-link"></span></a>Adding a tag</h3>
+
+<pre><code>$spark = new Spark\Core\Spark();
+
+$spark-&gt;addTag("Example", function($html, $inner) {
+    return "Hello World!";
+});
+
+print $spark-&gt;run('&lt;html&gt;&lt;body&gt;&lt;SparkExample /&gt;&lt;/body&gt;&lt;/html&gt;');
+</code></pre>
       </section>
 
     </div>
