@@ -44,6 +44,34 @@ class Spark
 	}
 
 	/**
+	 * Set the namespace
+	 */
+	public function setNamespace($namespace) {
+		$this->_namespace = $namespace;
+	}
+
+	/**
+	 * Returns the namespace
+	 */
+	public function getNamespace() {
+		return $this->_namespace;
+	}
+
+	/**
+	 * Set the namespace callback
+	 */
+	public function setNamespaceCallback($callback) {
+		$this->_namespace_callback = $callback;
+	}
+
+	/**
+	 * Returns the namespace callback
+	 */
+	public function getNamespaceCallback() {
+		return $this->_namespace_callback;
+	}
+
+	/**
 	 * Register a callback related to a tag.
 	 * Everytime spark encountrers the tag it will call the callback function with the element's markup
 	 * 
