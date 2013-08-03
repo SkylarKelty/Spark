@@ -110,7 +110,7 @@ class Spark
 	 * @return <SparkTest> will return SparkTest
 	 */
 	public function getTagName($tag) {
-		$regex = '#</?(.*?)[ >]+#is';
+		$regex = '#</?(.*?)[ >/]+#is';
 		if (preg_match($regex, $tag, $matches)) {
 			return $matches[1];
 		}
