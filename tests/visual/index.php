@@ -14,37 +14,23 @@ ob_start();
     <body>
         <p>Hello world!</p>
         <SparkVersion></SparkVersion>
-        <p>Non-Nested boolean switch result:
-            <SparkSwitch>
-                False
-            </SparkSwitch>
-        </p>
-        <p>Nested boolean switch result:
-            <SparkSwitch>
+        <p>Non-Nested boolean switch result: <SparkSwitch>False</SparkSwitch></p>
+        <p>Nested boolean switch result: <SparkSwitch>
+            <SparkSwitch>True</SparkSwitch>
+        </SparkSwitch></p>
+        <p>Multi-Nested boolean switch result: <SparkSwitch>
                 <SparkSwitch>
-                    True
+                    <SparkSwitch>False</SparkSwitch>
                 </SparkSwitch>
-            </SparkSwitch>
-        </p>
-        <p>Multi-Nested boolean switch result:
-            <SparkSwitch>
-                <SparkSwitch>
-                    <SparkSwitch>
-                        False
-                    </SparkSwitch>
-                </SparkSwitch>
-            </SparkSwitch>
-        </p>
-        <p>Nested boolean logic result:
-            <SparkLogic>
+        </SparkSwitch></p>
+        <p>Nested boolean logic result: <SparkLogic>
                 <SparkPass>
                     True
                 </SparkPass>
                 <SparkPass>
                     False
                 </SparkPass>
-            </SparkLogic>
-        </p>
+        </SparkLogic></p>
     </body>
 </html>
 
