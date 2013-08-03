@@ -88,10 +88,11 @@ class Spark
 	 * Register a callback related to a tag.
 	 * Everytime spark encountrers the tag it will call the callback function with the element's markup
 	 * 
-	 * @param string $tag      The Tag to detect
-	 * @param mixed  $callback The Callback to call when the $tag is detected
+	 * @param string  $tag      The Tag to detect
+	 * @param mixed   $callback The Callback to call when the $tag is detected
+	 * @param integer $weight   The weight of the tag (higher runs first, lower last). Range: 0-100, default 50
 	 */
-	public function addTag($tag, $callback) {
+	public function addTag($tag, $callback, $weight = 50) {
 		$this->_registered_elements[$tag] = $callback;
 	}
 
