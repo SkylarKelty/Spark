@@ -1,7 +1,4 @@
-<?php
-$t = microtime(true);
-require_once("src/loader.php");
-?>
+<?php require_once("src/loader.php"); ?>
 
 <!DOCTYPE html>
 <html>
@@ -43,7 +40,4 @@ require_once("src/loader.php");
     </body>
 </html>
 
-<?php
-require_once("src/run.php");
-print "\n" . '<!-- Page loaded in ' . round((microtime(true) - $t), 3) . ' seconds -->';
-?>
+<?php require_once("src/run.php"); ?>
