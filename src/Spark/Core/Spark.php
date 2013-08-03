@@ -190,7 +190,7 @@ class Spark
 					// List it as embedded, the parent is responsible for the output
 					$ptr = end($stack);
 					$ptr = $ptr[0];
-					$this->_tokens[$ptr][] = "[[SRM]]";
+					$this->_tokens[$ptr][] = "";
 					$this->_embedded_tokens[$token] = array($ptr, count($this->_tokens[$ptr]) - 1);
 				} else {
 					// Tokenise it
@@ -239,7 +239,7 @@ class Spark
 
 			// Remove that tag and push all the HTML back in
 			array_shift($this->_tokens[$token]);
-			$html = str_replace("<SPARKTOKEN" . $token . ">", implode("\n", $this->_tokens[$token]), $html);
+			$html = str_replace("<SPARKTOKEN" . $token . ">", implode("", $this->_tokens[$token]), $html);
 			unset($this->_tokens[$token]);
 		}
 

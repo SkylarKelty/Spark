@@ -103,6 +103,13 @@ class SparkTest extends PHPUnit_Framework_TestCase
       $this->assertEquals($expected_html, $result);
       $this->assertEquals(array('Bad markup: No closing tag found for element: SparkTest'), $this->_spark->getErrors());
 
+      // Test bad namespace HTML
+      $html = '<html><head><title>Test</title></head><body><SparkTest></SparkTest><SparkTest><SparkTest></SparkTest></body></html>';
+      $expected_html = '<html><head><title>Test</title></head><body>Test<SparkTest></body></html>';
+      $result = $this->_spark->run($html);
+      $this->assertEquals($expected_html, $result);
+      $this->assertEquals(array('Bad markup: No closing tag found for element: SparkTest'), $this->_spark->getErrors());
+
       // Test bad normal HTML
       $html = '<html><head><title>Test</title></head><body><SparkTest></SparkTest></p></body></html>';
       $expected_html = '<html><head><title>Test</title></head><body>Test</p></body></html>';
