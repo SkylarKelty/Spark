@@ -16,3 +16,14 @@ The result of this project is a very simple template parser that can be hooked u
 $spark = new Spark\Core\Spark();
 print $spark->run('<html><body><SparkVersion /></body></html>');
 ```
+
+### Adding a tag
+```
+$spark = new Spark\Core\Spark();
+
+$spark->addTag("Example", function($html, $inner) {
+    return "Hello World!";
+});
+
+print $spark->run('<html><body><SparkExample /></body></html>');
+```
