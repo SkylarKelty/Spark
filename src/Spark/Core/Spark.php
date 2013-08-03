@@ -21,6 +21,8 @@ class Spark
 	private $_tokens = array();
 	/** A list of all linked tokens (e.g. embedded snippets) */
 	private $_embedded_tokens = array();
+	/** The last output we processed */
+	private $_output;
 
 	/**
 	 * Initialise Spark
@@ -55,11 +57,12 @@ class Spark
 	}
 
 	/**
-	 * Render a page
+	 * Run through a page
+	 * Call this OR render, not both
 	 * 
 	 * @param string $html The HTML to render
 	 */
-	public function render($html) {
+	public function run($html) {
 		// Reset tokens
 		$this->_tokens = array();
 
@@ -72,8 +75,21 @@ class Spark
 		// Replace tags with data
 		$html = $this->replace($html);
 
-		// Post-process and output
-		print $this->postProcess($html);
+		// Post-process and set output
+		$this->_output = $this->postProcess($html);
+
+		return $this->_output;
+	}
+
+	/**
+	 * Render a page (run and output)
+	 * Call this OR run, not both
+	 * 
+	 * @param string $html The HTML to render
+	 */
+	public function render($html) {
+		// Process and output
+		print $this->run($html);
 	}
 
 	/**

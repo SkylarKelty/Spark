@@ -26,6 +26,30 @@ class SparkTest extends PHPUnit_Framework_TestCase
    	$html = '<html><head><title>Test</title></head><body><SparkTest></SparkTest></body></html>';
    	$expected_html = '<html><head><title>Test</title></head><body>Example</body></html>';
 
-      $this->assertEquals($expected_html, $this->_spark->render($html));
+   	$result = $this->_spark->run($html);
+
+   	// TODO - V0.3 should be non-destructive
+   	$result = str_replace("\n", "", $result);
+
+      $this->assertEquals($expected_html, $result);
+   }
+   
+   public function testNestedRender() {
+		// This is a Boolean switch
+		$this->_spark->addTag("Switch", function($html, $inner) {
+		    if ($inner == "True") return "False";
+		    if ($inner == "False") return "True";
+		    return "Error";
+		});
+
+   	$html = '<html><head><title>Test</title></head><body><SparkSwitch><SparkSwitch><SparkSwitch>False</SparkSwitch></SparkSwitch></SparkSwitch></body></html>';
+   	$expected_html = '<html><head><title>Test</title></head><body>True</body></html>';
+
+   	$result = $this->_spark->run($html);
+
+   	// TODO - V0.3 should be non-destructive
+   	$result = str_replace("\n", "", $result);
+
+      $this->assertEquals($expected_html, $result);
    }
 }
