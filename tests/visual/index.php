@@ -63,7 +63,7 @@ $spark->addTag("Pass", function($html, $inner) {
 });
 
 // Render out
-$spark->render($ob);
+print $spark->run($ob);
 
 print "\n" . '<!--Finished in ' . round((microtime(true) - $t), 3) . ' seconds-->';
 ?>
