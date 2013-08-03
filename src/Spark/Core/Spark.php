@@ -41,7 +41,7 @@ class Spark
 
 		// Add a demo tag
 		$this->addTag("Version", function($html, $inner) {
-			return "<p>Spark V0.5</p>";
+			return "<p>Spark V0.7_dev</p>";
 		});
 	}
 
