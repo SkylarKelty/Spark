@@ -15,6 +15,8 @@ class Spark
 {
 	/** The namespace for Spark to use (prefixes all tags) */
 	private $_namespace;
+	/** The namespace callback for Spark to use (called for any tag within a namespace) */
+	private $_namespace_callback;
 	/** A list of all elements we parse */
 	private $_registered_elements = array();
 	/** A list of all current tokens */
@@ -28,9 +30,11 @@ class Spark
 	 * Initialise Spark
 	 * 
 	 * @param string $namespace The namespace for Spark to use (prefixes all tags)
+	 * @param method $callback  A method to be called for any tags within the namespace (optional, negates Spark::addTag())
 	 */
-	public function __construct($namespace = "Spark") {
+	public function __construct($namespace = "Spark", $callback = null) {
 		$this->_namespace = $namespace;
+		$this->_namespace_callback = $callback;
 		$this->_output = "";
 
 		// Add a demo tag
@@ -177,8 +181,8 @@ class Spark
 			$tag = substr($tag, $tlen);
 			$tag = substr($tag, 0, -1);
 
-			if (isset($this->_registered_elements[$tag])) {
-				$func = $this->_registered_elements[$tag];
+			if (isset($this->_namespace_callback) || isset($this->_registered_elements[$tag])) {
+				$func = isset($this->_namespace_callback) ? $this->_namespace_callback : $this->_registered_elements[$tag];
 
 				// Grab markups
 				$snippet_markup = trim(implode("\n", $data));
