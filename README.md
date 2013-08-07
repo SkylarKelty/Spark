@@ -1,4 +1,4 @@
-Spark
+Spark [![Build Status](https://travis-ci.org/SkylarKelty/Spark.png?branch=master)](https://travis-ci.org/SkylarKelty/Spark)
 =====
 *The 300 line template parser*
 
