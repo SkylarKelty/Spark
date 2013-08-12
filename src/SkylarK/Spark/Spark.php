@@ -6,7 +6,7 @@
  * @author Skylar Kelty <skylarkelty@gmail.com>
  */
 
-namespace Spark\Core;
+namespace SkylarK\Spark;
 
 /**
  * The core of Spark
@@ -38,7 +38,7 @@ class Spark
 		$this->_namespace = $namespace;
 		$this->_namespace_callback = $callback;
 
-		// Add a demo tag
+		// Add a version tag
 		$this->addTag("Version", function($html, $inner) {
 			return '<a href="https://github.com/SkylarKelty/Spark" target="_blank">Spark</a> v1.0';
 		});

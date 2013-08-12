@@ -1,10 +1,13 @@
 <?php
+
+use SkylarK\Spark\Spark as Spark;
+
 class SparkTest extends PHPUnit_Framework_TestCase
 {
    private $_spark;
 
    protected function setUp() {
-      $this->_spark = new Spark\Core\Spark();
+      $this->_spark = new Spark();
    }
    
    public function testLoadingTags() {
@@ -67,7 +70,7 @@ class SparkTest extends PHPUnit_Framework_TestCase
    }
    
    public function testNamespaceCallback() {
-      $spark = new Spark\Core\Spark("Spark", function($html, $inner) {
+      $spark = new Spark("Spark", function($html, $inner) {
          return "Caught It!";
       });
 
