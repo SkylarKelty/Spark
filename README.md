@@ -1,5 +1,9 @@
-Spark [![Build Status](https://travis-ci.org/SkylarKelty/Spark.png?branch=master)](https://travis-ci.org/SkylarKelty/Spark)
+Spark
 =====
+
+[![Latest Stable Version](https://poser.pugx.org/skylarkelty/spark/v/stable.png)](https://packagist.org/packages/skylarkelty/spark)
+[![Build Status](https://travis-ci.org/SkylarKelty/Spark.png?branch=master)](https://travis-ci.org/SkylarKelty/Spark)
+
 *The 300 line template parser*
 
 A high-performance Template Parser designed to work inside a full templating engine or alongside an application.
